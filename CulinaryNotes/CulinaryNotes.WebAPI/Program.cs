@@ -1,25 +1,26 @@
+using CulinaryNotes.WebAPI.IoC;
+using CulinaryNotes.WebAPI.Settings;
+
+var configuration = new ConfigurationBuilder()
+.AddJsonFile("appsettings.json", optional: false)
+.Build();
+
+var settings = CulinaryNotesSettingsReader.Read(configuration);
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+SerilogConfigurator.ConfigureService(builder);
+SwaggerConfigurator.ConfigureServices(builder.Services);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+SerilogConfigurator.ConfigureApplication(app);
+SwaggerConfigurator.ConfigureApplication(app);
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
