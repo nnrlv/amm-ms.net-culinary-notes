@@ -29,4 +29,4 @@
 - авторы заметки могут редактировать и удалять свои кулинарные записи;
 - администратор может редактировать и удалять не соответствующие политике сайта кулинарные заметки других пользователей.
 
-![logical model](https://github.com/nnrlv/amm-ms.net-culinary-notes/blob/main/culinary_notes_logical_model.jpg)
+![logical model](https://github.com/nnrlv/amm-ms.net-culinary-notes/blob/main/culinary_notes_logical_model_2.jpg)
