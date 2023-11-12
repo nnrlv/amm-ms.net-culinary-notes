@@ -2,6 +2,6 @@
 {
     public class CulinaryNotesSettings
     {
-        // здесь будут приложения, например, строка подключения к бд
+        public string CulinaryNotesDbContextConnectionString { get; set; }
     }
 }
