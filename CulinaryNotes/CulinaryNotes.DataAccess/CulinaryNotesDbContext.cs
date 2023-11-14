@@ -25,44 +25,42 @@ public class CulinaryNotesDbContext : DbContext
         // User
         modelBuilder.Entity<UserEntity>().HasKey(x => x.Id);
         modelBuilder.Entity<UserEntity>().HasIndex(x => x.ExternalId).IsUnique();
-        //modelBuilder.Entity<UserEntity>().HasMany(x => x.UserRatings)
-        //    .WithOne(x => x.User)
-        //    .HasForeignKey(x => x.UserId)
-        //    .OnDelete(DeleteBehavior.NoAction);
         modelBuilder.Entity<UserEntity>().HasMany(x => x.CulinaryNotes)
             .WithOne(x => x.User)
-            .HasForeignKey(x => x.UserId);
+            .HasForeignKey(x => x.UserId)
+            .OnDelete(DeleteBehavior.NoAction);
+        modelBuilder.Entity<UserEntity>().HasMany(x => x.UserRatings)
+            .WithOne(x => x.User)
+            .HasForeignKey(x => x.UserId)
+            .OnDelete(DeleteBehavior.NoAction);
 
         // Culinary Note
         modelBuilder.Entity<CulinaryNoteEntity>().HasKey(x => x.Id);
         modelBuilder.Entity<CulinaryNoteEntity>().HasIndex(x => x.ExternalId).IsUnique();
-        //modelBuilder.Entity<CulinaryNoteEntity>().HasMany(x => x.UserRatings)
-        //   .WithOne(x => x.CulinaryNote)
-        //   .HasForeignKey(x => x.CulinaryNoteId);
         modelBuilder.Entity<CulinaryNoteEntity>().HasMany(x => x.IngredientsInCulinaryNote)
            .WithOne(x => x.CulinaryNote)
-           .HasForeignKey(x => x.CulinaryNoteId);
-
-        // User Rating
-        modelBuilder.Entity<UserRatingEntity>().HasKey(x => new { x.UserId, x.CulinaryNoteId });
-
-        // Ingredient In Culinary Note
-        modelBuilder.Entity<IngredientInCulinaryNoteEntity>()
-            .HasKey(x => new { x.IngredientId, x.CulinaryNoteId });
+           .HasForeignKey(x => x.CulinaryNoteId)
+           .OnDelete(DeleteBehavior.NoAction);
+        modelBuilder.Entity<CulinaryNoteEntity>().HasMany(x => x.UserRatings)
+           .WithOne(x => x.CulinaryNote)
+           .HasForeignKey(x => x.CulinaryNoteId)
+           .OnDelete(DeleteBehavior.NoAction);
 
         // Ingredient
         modelBuilder.Entity<IngredientEntity>().HasKey(x => x.Id);
         modelBuilder.Entity<IngredientEntity>().HasIndex(x => x.ExternalId).IsUnique();
         modelBuilder.Entity<IngredientEntity>().HasMany(x => x.IngredientsInCulinaryNote)
            .WithOne(x => x.Ingredient)
-           .HasForeignKey(x => x.IngredientId);
+           .HasForeignKey(x => x.IngredientId)
+           .OnDelete(DeleteBehavior.NoAction);
 
         // Unit Of Measurement
         modelBuilder.Entity<UnitOfMeasurementEntity>().HasKey(x => x.Id);
         modelBuilder.Entity<UnitOfMeasurementEntity>().HasIndex(x => x.ExternalId).IsUnique();
         modelBuilder.Entity<UnitOfMeasurementEntity>().HasMany(x => x.Ingredients)
            .WithOne(x => x.UnitOfMeasurement)
-           .HasForeignKey(x => x.UnitOfMeasurementId);
+           .HasForeignKey(x => x.UnitOfMeasurementId)
+           .OnDelete(DeleteBehavior.NoAction);
 
         // Category
         modelBuilder.Entity<CategoryEntity>().HasKey(x => x.Id);
@@ -73,6 +71,13 @@ public class CulinaryNotesDbContext : DbContext
            .OnDelete(DeleteBehavior.NoAction);
         modelBuilder.Entity<CategoryEntity>().HasMany(x => x.CulinaryNotes)
            .WithOne(x => x.Category)
-           .HasForeignKey(x => x.CategoryId);
+           .HasForeignKey(x => x.CategoryId)
+           .OnDelete(DeleteBehavior.NoAction);
+
+        // User Rating
+        modelBuilder.Entity<UserRatingEntity>().HasKey(x => new { x.UserId, x.CulinaryNoteId });
+
+        // Ingredient In Culinary Note
+        modelBuilder.Entity<IngredientInCulinaryNoteEntity>().HasKey(x => new { x.IngredientId, x.CulinaryNoteId });
     }
 }

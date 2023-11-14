@@ -35,7 +35,7 @@ namespace CulinaryNotes.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ParentCategoryId = table.Column<int>(type: "int", nullable: false),
+                    CategoryEntityId = table.Column<int>(type: "int", nullable: true),
                     ExternalId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ModificationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -44,8 +44,8 @@ namespace CulinaryNotes.DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_categories", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_categories_categories_ParentCategoryId",
-                        column: x => x.ParentCategoryId,
+                        name: "FK_categories_categories_CategoryEntityId",
+                        column: x => x.CategoryEntityId,
                         principalTable: "categories",
                         principalColumn: "Id");
                 });
@@ -105,12 +105,11 @@ namespace CulinaryNotes.DataAccess.Migrations
                         name: "FK_ingredients_units of measurement_UnitOfMeasurementId",
                         column: x => x.UnitOfMeasurementId,
                         principalTable: "units of measurement",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "culinary notes",
+                name: "culinary_notes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -127,19 +126,17 @@ namespace CulinaryNotes.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_culinary notes", x => x.Id);
+                    table.PrimaryKey("PK_culinary_notes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_culinary notes_categories_CategoryId",
+                        name: "FK_culinary_notes_categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_culinary notes_users_UserId",
+                        name: "FK_culinary_notes_users_UserId",
                         column: x => x.UserId,
                         principalTable: "users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -158,17 +155,15 @@ namespace CulinaryNotes.DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_ingredients in culinary notes", x => new { x.IngredientId, x.CulinaryNoteId });
                     table.ForeignKey(
-                        name: "FK_ingredients in culinary notes_culinary notes_CulinaryNoteId",
+                        name: "FK_ingredients in culinary notes_culinary_notes_CulinaryNoteId",
                         column: x => x.CulinaryNoteId,
-                        principalTable: "culinary notes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalTable: "culinary_notes",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_ingredients in culinary notes_ingredients_IngredientId",
                         column: x => x.IngredientId,
                         principalTable: "ingredients",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -188,11 +183,10 @@ namespace CulinaryNotes.DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_user ratings", x => new { x.UserId, x.CulinaryNoteId });
                     table.ForeignKey(
-                        name: "FK_user ratings_culinary notes_CulinaryNoteId",
+                        name: "FK_user ratings_culinary_notes_CulinaryNoteId",
                         column: x => x.CulinaryNoteId,
-                        principalTable: "culinary notes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalTable: "culinary_notes",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_user ratings_users_UserId",
                         column: x => x.UserId,
@@ -207,30 +201,30 @@ namespace CulinaryNotes.DataAccess.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_categories_CategoryEntityId",
+                table: "categories",
+                column: "CategoryEntityId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_categories_ExternalId",
                 table: "categories",
                 column: "ExternalId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_categories_ParentCategoryId",
-                table: "categories",
-                column: "ParentCategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_culinary notes_CategoryId",
-                table: "culinary notes",
+                name: "IX_culinary_notes_CategoryId",
+                table: "culinary_notes",
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_culinary notes_ExternalId",
-                table: "culinary notes",
+                name: "IX_culinary_notes_ExternalId",
+                table: "culinary_notes",
                 column: "ExternalId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_culinary notes_UserId",
-                table: "culinary notes",
+                name: "IX_culinary_notes_UserId",
+                table: "culinary_notes",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -283,7 +277,7 @@ namespace CulinaryNotes.DataAccess.Migrations
                 name: "ingredients");
 
             migrationBuilder.DropTable(
-                name: "culinary notes");
+                name: "culinary_notes");
 
             migrationBuilder.DropTable(
                 name: "units of measurement");

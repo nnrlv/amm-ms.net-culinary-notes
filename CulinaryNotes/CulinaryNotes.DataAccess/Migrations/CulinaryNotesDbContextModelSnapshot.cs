@@ -52,7 +52,7 @@ namespace CulinaryNotes.DataAccess.Migrations
                     b.HasIndex("ExternalId")
                         .IsUnique();
 
-                    b.ToTable("admins", (string)null);
+                    b.ToTable("admins");
                 });
 
             modelBuilder.Entity("CulinaryNotes.DataAccess.Entities.CategoryEntity", b =>
@@ -62,6 +62,9 @@ namespace CulinaryNotes.DataAccess.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CategoryEntityId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
@@ -76,17 +79,14 @@ namespace CulinaryNotes.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ParentCategoryId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryEntityId");
 
                     b.HasIndex("ExternalId")
                         .IsUnique();
 
-                    b.HasIndex("ParentCategoryId");
-
-                    b.ToTable("categories", (string)null);
+                    b.ToTable("categories");
                 });
 
             modelBuilder.Entity("CulinaryNotes.DataAccess.Entities.CulinaryNoteEntity", b =>
@@ -136,7 +136,7 @@ namespace CulinaryNotes.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("culinary notes", (string)null);
+                    b.ToTable("culinary_notes");
                 });
 
             modelBuilder.Entity("CulinaryNotes.DataAccess.Entities.IngredientEntity", b =>
@@ -170,7 +170,7 @@ namespace CulinaryNotes.DataAccess.Migrations
 
                     b.HasIndex("UnitOfMeasurementId");
 
-                    b.ToTable("ingredients", (string)null);
+                    b.ToTable("ingredients");
                 });
 
             modelBuilder.Entity("CulinaryNotes.DataAccess.Entities.IngredientInCulinaryNoteEntity", b =>
@@ -200,7 +200,7 @@ namespace CulinaryNotes.DataAccess.Migrations
 
                     b.HasIndex("CulinaryNoteId");
 
-                    b.ToTable("ingredients in culinary notes", (string)null);
+                    b.ToTable("ingredients in culinary notes");
                 });
 
             modelBuilder.Entity("CulinaryNotes.DataAccess.Entities.UnitOfMeasurementEntity", b =>
@@ -233,7 +233,7 @@ namespace CulinaryNotes.DataAccess.Migrations
                     b.HasIndex("ExternalId")
                         .IsUnique();
 
-                    b.ToTable("units of measurement", (string)null);
+                    b.ToTable("units of measurement");
                 });
 
             modelBuilder.Entity("CulinaryNotes.DataAccess.Entities.UserEntity", b =>
@@ -274,7 +274,7 @@ namespace CulinaryNotes.DataAccess.Migrations
                     b.HasIndex("ExternalId")
                         .IsUnique();
 
-                    b.ToTable("users", (string)null);
+                    b.ToTable("users");
                 });
 
             modelBuilder.Entity("CulinaryNotes.DataAccess.Entities.UserRatingEntity", b =>
@@ -308,18 +308,14 @@ namespace CulinaryNotes.DataAccess.Migrations
 
                     b.HasIndex("CulinaryNoteId");
 
-                    b.ToTable("user ratings", (string)null);
+                    b.ToTable("user ratings");
                 });
 
             modelBuilder.Entity("CulinaryNotes.DataAccess.Entities.CategoryEntity", b =>
                 {
-                    b.HasOne("CulinaryNotes.DataAccess.Entities.CategoryEntity", "ParentCategory")
+                    b.HasOne("CulinaryNotes.DataAccess.Entities.CategoryEntity", null)
                         .WithMany("Categories")
-                        .HasForeignKey("ParentCategoryId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("ParentCategory");
+                        .HasForeignKey("CategoryEntityId");
                 });
 
             modelBuilder.Entity("CulinaryNotes.DataAccess.Entities.CulinaryNoteEntity", b =>
@@ -327,13 +323,13 @@ namespace CulinaryNotes.DataAccess.Migrations
                     b.HasOne("CulinaryNotes.DataAccess.Entities.CategoryEntity", "Category")
                         .WithMany("CulinaryNotes")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("CulinaryNotes.DataAccess.Entities.UserEntity", "User")
                         .WithMany("CulinaryNotes")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Category");
@@ -346,7 +342,7 @@ namespace CulinaryNotes.DataAccess.Migrations
                     b.HasOne("CulinaryNotes.DataAccess.Entities.UnitOfMeasurementEntity", "UnitOfMeasurement")
                         .WithMany("Ingredients")
                         .HasForeignKey("UnitOfMeasurementId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("UnitOfMeasurement");
@@ -357,13 +353,13 @@ namespace CulinaryNotes.DataAccess.Migrations
                     b.HasOne("CulinaryNotes.DataAccess.Entities.CulinaryNoteEntity", "CulinaryNote")
                         .WithMany("IngredientsInCulinaryNote")
                         .HasForeignKey("CulinaryNoteId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("CulinaryNotes.DataAccess.Entities.IngredientEntity", "Ingredient")
                         .WithMany("IngredientsInCulinaryNote")
                         .HasForeignKey("IngredientId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("CulinaryNote");
@@ -376,7 +372,7 @@ namespace CulinaryNotes.DataAccess.Migrations
                     b.HasOne("CulinaryNotes.DataAccess.Entities.CulinaryNoteEntity", "CulinaryNote")
                         .WithMany("UserRatings")
                         .HasForeignKey("CulinaryNoteId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("CulinaryNotes.DataAccess.Entities.UserEntity", "User")

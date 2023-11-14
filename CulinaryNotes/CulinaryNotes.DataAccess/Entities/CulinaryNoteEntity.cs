@@ -2,7 +2,7 @@
 
 namespace CulinaryNotes.DataAccess.Entities;
 
-[Table("culinary notes")]
+[Table("culinary_notes")]
 public class CulinaryNoteEntity : BaseEntity
 {
     public string Name { get; set; }
