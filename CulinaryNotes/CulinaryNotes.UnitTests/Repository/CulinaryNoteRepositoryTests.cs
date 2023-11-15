@@ -1,6 +1,5 @@
 ﻿using CulinaryNotes.DataAccess;
 using CulinaryNotes.DataAccess.Entities;
-using CulinaryNotes.UnitTests.Repository;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -41,7 +40,9 @@ public class CulinaryNoteRepositoryTests : RepositoryTestsBaseClass
                 Description = "description1",
                 Instructions = "instructions1",
                 Rating = 4.8,
-                ExternalId = Guid.NewGuid()
+                ExternalId = Guid.NewGuid(),
+                UserId = user.Id,
+                CategoryId = category.Id
             },
             new CulinaryNoteEntity()
             {
@@ -49,7 +50,9 @@ public class CulinaryNoteRepositoryTests : RepositoryTestsBaseClass
                 Description = "description2",
                 Instructions = "instructions2",
                 Rating = 4.4,
-                ExternalId = Guid.NewGuid()
+                ExternalId = Guid.NewGuid(),
+                UserId = user.Id,
+                CategoryId = category.Id
             },
         };
 
@@ -99,7 +102,9 @@ public class CulinaryNoteRepositoryTests : RepositoryTestsBaseClass
                 Description = "description1",
                 Instructions = "instructions1",
                 Rating = 4.8,
-                ExternalId = Guid.NewGuid()
+                ExternalId = Guid.NewGuid(),
+                UserId = user.Id,
+                CategoryId = category.Id
             },
             new CulinaryNoteEntity()
             {
@@ -107,7 +112,9 @@ public class CulinaryNoteRepositoryTests : RepositoryTestsBaseClass
                 Description = "description2",
                 Instructions = "instructions2",
                 Rating = 4.4,
-                ExternalId = Guid.NewGuid()
+                ExternalId = Guid.NewGuid(),
+                UserId = user.Id,
+                CategoryId = category.Id
             },
         };
 
@@ -120,7 +127,9 @@ public class CulinaryNoteRepositoryTests : RepositoryTestsBaseClass
         var actualCulinaryNotes = repository.GetAll(x => x.Name == "name1").ToArray();
 
         //assert
-        actualCulinaryNotes.Should().BeEquivalentTo(culinaryNotes.Where(x => x.Name == "name1"));
+        actualCulinaryNotes.Should().BeEquivalentTo(culinaryNotes.Where(x => x.Name == "name1"), 
+            options => options.Excluding(x => x.User)
+            .Excluding(x => x.Category));
     }
 
     [Test]
@@ -154,7 +163,9 @@ public class CulinaryNoteRepositoryTests : RepositoryTestsBaseClass
             Description = "description1",
             Instructions = "instructions1",
             Rating = 4.8,
-            ExternalId = Guid.NewGuid()
+            ExternalId = Guid.NewGuid(),
+            UserId = user.Id,
+            CategoryId = category.Id
         };
 
         var repository = new Repository<CulinaryNoteEntity>(DbContextFactory);
@@ -166,7 +177,9 @@ public class CulinaryNoteRepositoryTests : RepositoryTestsBaseClass
         actualCulinaryNote.Should().BeEquivalentTo(culinaryNote, options => options.Excluding(x => x.Id)
             .Excluding(x => x.ModificationTime)
             .Excluding(x => x.CreationTime)
-            .Excluding(x => x.ExternalId));
+            .Excluding(x => x.ExternalId)
+            .Excluding(x => x.User)
+            .Excluding(x => x.Category));
         actualCulinaryNote.Id.Should().NotBe(default);
         actualCulinaryNote.ModificationTime.Should().NotBe(default);
         actualCulinaryNote.CreationTime.Should().NotBe(default);
@@ -203,7 +216,9 @@ public class CulinaryNoteRepositoryTests : RepositoryTestsBaseClass
             Description = "description1",
             Instructions = "instructions1",
             Rating = 4.8,
-            ExternalId = Guid.NewGuid()
+            ExternalId = Guid.NewGuid(),
+            UserId = user.Id,
+            CategoryId = category.Id
         };
 
         context.CulinaryNotes.Add(culinaryNote);
@@ -255,7 +270,9 @@ public class CulinaryNoteRepositoryTests : RepositoryTestsBaseClass
             Description = "description1",
             Instructions = "instructions1",
             Rating = 4.8,
-            ExternalId = Guid.NewGuid()
+            ExternalId = Guid.NewGuid(),
+            UserId = user.Id,
+            CategoryId = category.Id
         };
 
         context.CulinaryNotes.Add(culinaryNote);

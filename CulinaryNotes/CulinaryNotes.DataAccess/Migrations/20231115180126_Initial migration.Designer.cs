@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CulinaryNotes.DataAccess.Migrations
 {
     [DbContext(typeof(CulinaryNotesDbContext))]
-    [Migration("20231114145939_Initial migration")]
+    [Migration("20231115180126_Initial migration")]
     partial class Initialmigration
     {
         /// <inheritdoc />
@@ -66,7 +66,7 @@ namespace CulinaryNotes.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CategoryEntityId")
+                    b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreationTime")
@@ -84,7 +84,7 @@ namespace CulinaryNotes.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryEntityId");
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("ExternalId")
                         .IsUnique();
@@ -316,9 +316,12 @@ namespace CulinaryNotes.DataAccess.Migrations
 
             modelBuilder.Entity("CulinaryNotes.DataAccess.Entities.CategoryEntity", b =>
                 {
-                    b.HasOne("CulinaryNotes.DataAccess.Entities.CategoryEntity", null)
+                    b.HasOne("CulinaryNotes.DataAccess.Entities.CategoryEntity", "ParentCategory")
                         .WithMany("Categories")
-                        .HasForeignKey("CategoryEntityId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("ParentCategory");
                 });
 
             modelBuilder.Entity("CulinaryNotes.DataAccess.Entities.CulinaryNoteEntity", b =>

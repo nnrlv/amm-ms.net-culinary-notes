@@ -67,7 +67,7 @@ public class CulinaryNotesDbContext : DbContext
         modelBuilder.Entity<CategoryEntity>().HasIndex(x => x.ExternalId).IsUnique();
         modelBuilder.Entity<CategoryEntity>().HasMany(x => x.Categories)
            .WithOne(x => x.ParentCategory)
-           .HasForeignKey(x => x.ParentCategoryId)
+           .HasForeignKey(x => x.CategoryId)
            .OnDelete(DeleteBehavior.NoAction);
         modelBuilder.Entity<CategoryEntity>().HasMany(x => x.CulinaryNotes)
            .WithOne(x => x.Category)

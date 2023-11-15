@@ -35,7 +35,7 @@ namespace CulinaryNotes.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CategoryEntityId = table.Column<int>(type: "int", nullable: true),
+                    CategoryId = table.Column<int>(type: "int", nullable: true),
                     ExternalId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ModificationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -44,8 +44,8 @@ namespace CulinaryNotes.DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_categories", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_categories_categories_CategoryEntityId",
-                        column: x => x.CategoryEntityId,
+                        name: "FK_categories_categories_CategoryId",
+                        column: x => x.CategoryId,
                         principalTable: "categories",
                         principalColumn: "Id");
                 });
@@ -201,9 +201,9 @@ namespace CulinaryNotes.DataAccess.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_categories_CategoryEntityId",
+                name: "IX_categories_CategoryId",
                 table: "categories",
-                column: "CategoryEntityId");
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_categories_ExternalId",
