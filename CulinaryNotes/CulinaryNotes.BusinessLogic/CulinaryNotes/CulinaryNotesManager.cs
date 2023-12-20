@@ -5,14 +5,14 @@ using CulinaryNotes.DataAccess.Entities;
 
 namespace CulinaryNotes.BusinessLogic.CulinaryNotes
 {
-    public class CulinaryNoteManager : ICulinaryNoteManager
+    public class CulinaryNotesManager : ICulinaryNotesManager
     {
         private readonly IRepository<CulinaryNoteEntity> _repository;
         private readonly IRepository<UserRatingEntity> _userRatingsRepository;
         private readonly IRepository<IngredientInCulinaryNoteEntity> _ingredientsInCulinaryNoteRepository;
         private readonly IMapper _mapper;
 
-        public CulinaryNoteManager(IRepository<CulinaryNoteEntity> repository, IRepository<UserRatingEntity> userRatingsRepository,
+        public CulinaryNotesManager(IRepository<CulinaryNoteEntity> repository, IRepository<UserRatingEntity> userRatingsRepository,
             IRepository<IngredientInCulinaryNoteEntity> ingredientsInCulinaryNoteRepository, IMapper mapper)
         {
             _repository = repository;

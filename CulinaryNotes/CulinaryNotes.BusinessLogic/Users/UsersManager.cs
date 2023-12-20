@@ -5,14 +5,14 @@ using CulinaryNotes.DataAccess.Entities;
 
 namespace CulinaryNotes.BusinessLogic.Users
 {
-    public class UserManager : IUserManager
+    public class UsersManager : IUsersManager
     {
         private readonly IRepository<UserEntity> _repository;
         private readonly IRepository<CulinaryNoteEntity> _culinaryNotesRepository;
         private readonly IRepository<UserRatingEntity> _userRatingsRepository;
         private readonly IMapper _mapper;
 
-        public UserManager(IRepository<UserEntity> repository, IRepository<CulinaryNoteEntity> culinaryNotesRepository,
+        public UsersManager(IRepository<UserEntity> repository, IRepository<CulinaryNoteEntity> culinaryNotesRepository,
             IRepository<UserRatingEntity> userRatingsRepository, IMapper mapper)
         {
             _repository = repository;

@@ -5,9 +5,9 @@ using CulinaryNotes.DataAccess.Entities;
 
 namespace CulinaryNotes.BusinessLogic.Mapper
 {
-    public class CulinaryNoteBLProfile : Profile
+    public class CulinaryNotesBLProfile : Profile
     {
-        public CulinaryNoteBLProfile()
+        public CulinaryNotesBLProfile()
         {
             CreateMap<CulinaryNoteEntity, CulinaryNoteModel>()
             .ForMember(dest => dest.ExternalId, opt => opt.MapFrom(src => src.ExternalId));

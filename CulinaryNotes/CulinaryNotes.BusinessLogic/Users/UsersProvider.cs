@@ -5,12 +5,12 @@ using CulinaryNotes.DataAccess.Entities;
 
 namespace CulinaryNotes.BusinessLogic.Users
 {
-    public class UserProvider : IUserProvider
+    public class UsersProvider : IUsersProvider
     {
         private readonly IRepository<UserEntity> _repository;
         private readonly IMapper _mapper;
 
-        public UserProvider(IRepository<UserEntity> repository, IMapper mapper)
+        public UsersProvider(IRepository<UserEntity> repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
