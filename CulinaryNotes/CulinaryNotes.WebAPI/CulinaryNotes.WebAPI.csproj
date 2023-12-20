@@ -22,6 +22,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="12.0.1" />
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+		<PackageReference Include="Duende.AccessTokenManagement" Version="2.0.3" />
+		<PackageReference Include="Duende.IdentityServer" Version="6.3.7" />
+		<PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="6.3.7" />
+		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="6.3.7" />
+		<PackageReference Include="Duende.IdentityServer.EntityFramework.Storage" Version="6.3.7" />
+		<PackageReference Include="Duende.IdentityServer.Storage" Version="6.3.7" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.25" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.13">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
