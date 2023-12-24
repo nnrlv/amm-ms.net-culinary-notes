@@ -2,7 +2,7 @@
 
 namespace CulinaryNotes.DataAccess.Entities;
 
-public class BaseEntity
+public class BaseEntity : IBaseEntity
 {
     [Key]
     public int Id { get; set; } // ключ в бд

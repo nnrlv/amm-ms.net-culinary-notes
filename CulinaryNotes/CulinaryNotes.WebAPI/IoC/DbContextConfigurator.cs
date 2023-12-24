@@ -2,7 +2,7 @@
 using CulinaryNotes.WebAPI.Settings;
 using Microsoft.EntityFrameworkCore;
 
-namespace FitnessClub.Service.IoC;
+namespace CulinaryNotes.WebAPI.IoC;
 
 public static class DbContextConfigurator
 {
